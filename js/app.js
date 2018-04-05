@@ -69,3 +69,14 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+function respondToClickCard(evt) {
+    if (evt.target.nodeName === "LI") {
+        evt.target.classList.add("open");
+        evt.target.classList.add("show");
+    }
+}
+
+const deckOfCards = document.querySelector('.deck');
+
+deckOfCards.addEventListener('click', respondToClickCard);
