@@ -70,10 +70,30 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+let openCards = [];
+
+function checkIfCardMatches(opCards) {
+    if (opCards[0].firstElementChild.className !== opCards[1].firstElementChild.className) {
+        for (const card of opCards) {
+            card.classList.remove('open');
+        }
+    } else {
+        for (const card of opCards) {
+            card.classList.add("match");
+        }
+    }
+    openCards = [];
+}
+
 function respondToClickCard(evt) {
-    if (evt.target.nodeName === "LI") {
+    if (evt.target.nodeName === "LI" && openCards.length < 2) {
         evt.target.classList.add("open");
-        evt.target.classList.add("show");
+        if (openCards[0] !== evt.target) {
+            openCards.push(evt.target);
+        }
+        if (openCards.length === 2) {
+            setTimeout(checkIfCardMatches, 500, openCards);
+        }
     }
 }
 
