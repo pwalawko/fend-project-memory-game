@@ -71,6 +71,7 @@ function shuffle(array) {
  */
 
 let openCards = [];
+let numberOfMoves = 0;
 
 function checkIfCardMatches(opCards) {
     if (opCards[0].firstElementChild.className !== opCards[1].firstElementChild.className) {
@@ -86,12 +87,19 @@ function checkIfCardMatches(opCards) {
 }
 
 function respondToClickCard(evt) {
-    if (evt.target.nodeName === "LI" && openCards.length < 2) {
+    if (evt.target.nodeName === "LI" && !evt.target.classList.contains('open') && openCards.length < 2) {
         evt.target.classList.add("open");
+        console.log(evt.target.classList)
         if (openCards[0] !== evt.target) {
             openCards.push(evt.target);
         }
         if (openCards.length === 2) {
+            numberOfMoves++;
+            if (numberOfMoves === 1) {
+                document.querySelector('.moves').textContent = numberOfMoves + ' Move';
+            } else {
+                document.querySelector('.moves').textContent = numberOfMoves + ' Moves';
+            }
             setTimeout(checkIfCardMatches, 500, openCards);
         }
     }
