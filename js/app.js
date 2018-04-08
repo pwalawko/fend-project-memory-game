@@ -86,10 +86,27 @@ function checkIfCardMatches(opCards) {
     openCards = [];
 }
 
+function makeStarEmpty(starIcon){
+    starIcon.className = 'fa fa-star-o';
+}
+
+function starsCounter() {
+    const stars = document.querySelectorAll('ul.stars li i');
+    switch (true) {
+        case numberOfMoves > 10 && numberOfMoves < 21:
+            makeStarEmpty(stars[2]);
+            break;
+        case numberOfMoves > 20 && numberOfMoves < 31:
+            makeStarEmpty(stars[1]);
+            break;
+        case numberOfMoves > 30:
+            makeStarEmpty(stars[0]);
+    }
+}
+
 function respondToClickCard(evt) {
     if (evt.target.nodeName === "LI" && !evt.target.classList.contains('open') && openCards.length < 2) {
         evt.target.classList.add("open");
-        console.log(evt.target.classList)
         if (openCards[0] !== evt.target) {
             openCards.push(evt.target);
         }
@@ -100,6 +117,7 @@ function respondToClickCard(evt) {
             } else {
                 document.querySelector('.moves').textContent = numberOfMoves + ' Moves';
             }
+            starsCounter();
             setTimeout(checkIfCardMatches, 500, openCards);
         }
     }
