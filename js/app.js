@@ -28,21 +28,26 @@ const cardList = [
  *   - add each card's HTML to the page
  */
 
-const shuffledCardList = shuffle(cardList);
+function prepareDeck() {
+    const shuffledCardList = shuffle(cardList);
 
-const deckList = document.createElement('ul');
-deckList.className = "deck";
+    const deckList = document.createElement('ul');
+    deckList.className = "deck";
 
-for (const card of shuffledCardList) {
-  const liElement = document.createElement('li');
-  liElement.className = "card";
-  const iElement = document.createElement('i');
-  iElement.className = "fa " + card;
-  liElement.appendChild(iElement);
-  deckList.appendChild(liElement);
+    for (const card of shuffledCardList) {
+      const liElement = document.createElement('li');
+      liElement.className = "card";
+      const iElement = document.createElement('i');
+      iElement.className = "fa " + card;
+      liElement.appendChild(iElement);
+      deckList.appendChild(liElement);
+    }
+
+    document.querySelector('.container').appendChild(deckList);
+    deckList.addEventListener('click', respondToClickCard);
 }
 
-document.querySelector('.container').appendChild(deckList);
+prepareDeck();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -90,8 +95,9 @@ function makeStarEmpty(starIcon){
     starIcon.className = 'fa fa-star-o';
 }
 
+const stars = document.querySelectorAll('ul.stars li i');
+
 function starsCounter() {
-    const stars = document.querySelectorAll('ul.stars li i');
     switch (true) {
         case numberOfMoves > 10 && numberOfMoves < 21:
             makeStarEmpty(stars[2]);
@@ -104,6 +110,8 @@ function starsCounter() {
     }
 }
 
+let displayMoves = document.querySelector('.moves');
+
 function respondToClickCard(evt) {
     if (evt.target.nodeName === "LI" && !evt.target.classList.contains('open') && openCards.length < 2) {
         evt.target.classList.add("open");
@@ -112,9 +120,8 @@ function respondToClickCard(evt) {
         }
         if (openCards.length === 2) {
             numberOfMoves++;
-            let displayMoves = document.querySelector('.moves');
             displayMoves.textContent = numberOfMoves + ' Move';
-            if (numberOfMoves > 1) {
+            if (numberOfMoves !== 1) {
                 displayMoves.textContent += 's';
             }
             starsCounter();
@@ -123,6 +130,17 @@ function respondToClickCard(evt) {
     }
 }
 
-const deckOfCards = document.querySelector('.deck');
+function restartGame() {
+    openCards = [];
+    numberOfMoves = 0;
+    displayMoves.textContent = '0 Moves';
+    const table = document.querySelector('.deck');
+    table.remove();
+    prepareDeck();
+    for (const star of stars) {
+        star.className = 'fa fa-star';
+    }
+}
 
-deckOfCards.addEventListener('click', respondToClickCard);
+const restartButton = document.querySelector('.restart');
+restartButton.addEventListener('click', restartGame);
