@@ -112,10 +112,10 @@ function respondToClickCard(evt) {
         }
         if (openCards.length === 2) {
             numberOfMoves++;
-            if (numberOfMoves === 1) {
-                document.querySelector('.moves').textContent = numberOfMoves + ' Move';
-            } else {
-                document.querySelector('.moves').textContent = numberOfMoves + ' Moves';
+            let displayMoves = document.querySelector('.moves');
+            displayMoves.textContent = numberOfMoves + ' Move';
+            if (numberOfMoves > 1) {
+                displayMoves.textContent += 's';
             }
             starsCounter();
             setTimeout(checkIfCardMatches, 500, openCards);
