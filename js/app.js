@@ -46,7 +46,7 @@ function prepareDeck() {
     document.querySelector('.container').appendChild(deckList);
     deckList.addEventListener('click', respondToClickCard);
 
-    const cardBox = document.querySelector('.card');
+    const cardBox = document.querySelector('.deck');
     cardBox.addEventListener('click', startTimer);
 }
 
@@ -80,10 +80,10 @@ function shuffle(array) {
 
 let openCards = [];
 let numberOfMoves = 0;
+const modal = document.querySelector('#endModal');
 
 function gameEnd() {
     clearTimeout(t);
-    const modal = document.querySelector('#endModal');
     modal.style.display = "block";
 }
 
@@ -99,6 +99,7 @@ function checkIfCardMatches(opCards) {
     }
     openCards = [];
     const matchedCards = document.querySelectorAll('.card.match');
+
     if (matchedCards.length === 16) {
         gameEnd();
     }
@@ -169,8 +170,10 @@ function timer() {
 }
 
 function startTimer(evt) {
-    evt.target.removeEventListener(evt.type, arguments.callee);
-    timer();
+    if (evt.target.nodeName === "LI") {
+        evt.target.parentElement.removeEventListener(evt.type, arguments.callee);
+        timer();
+    }
 }
 
 function resetTimer() {
@@ -192,5 +195,13 @@ function restartGame() {
     }
 }
 
+function playAgain() {
+    modal.style.display = "none";
+    restartGame();
+}
+
 const restartButton = document.querySelector('.restart');
 restartButton.addEventListener('click', restartGame);
+
+const playAgainButton = document.querySelector('#play-again-btn');
+playAgainButton.addEventListener('click', playAgain);
