@@ -45,6 +45,9 @@ function prepareDeck() {
 
     document.querySelector('.container').appendChild(deckList);
     deckList.addEventListener('click', respondToClickCard);
+
+    const cardBox = document.querySelector('.card');
+    cardBox.addEventListener('click', startTimer);
 }
 
 prepareDeck();
@@ -98,14 +101,14 @@ function makeStarEmpty(starIcon){
 const stars = document.querySelectorAll('ul.stars li i');
 
 function starsCounter() {
-    switch (true) {
-        case numberOfMoves > 10 && numberOfMoves < 21:
+    switch (numberOfMoves) {
+        case 11:
             makeStarEmpty(stars[2]);
             break;
-        case numberOfMoves > 20 && numberOfMoves < 31:
+        case 21:
             makeStarEmpty(stars[1]);
             break;
-        case numberOfMoves > 30:
+        case 31:
             makeStarEmpty(stars[0]);
     }
 }
@@ -130,10 +133,47 @@ function respondToClickCard(evt) {
     }
 }
 
+// Timer from https://jsfiddle.net/Daniel_Hug/pvk6p/
+
+let seconds = 0, minutes = 0, hours = 0;
+let t;
+const timerDisplayer = document.querySelector('.timer');
+
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+
+    timerDisplayer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    timer();
+}
+function timer() {
+    t = setTimeout(add, 1000);
+}
+
+function startTimer(evt) {
+    evt.target.removeEventListener(evt.type, arguments.callee);
+    timer();
+}
+
+function stopTimer() {
+    clearTimeout(t);
+    timerDisplayer.textContent = "00:00:00";
+    seconds = 0; minutes = 0; hours = 0;
+}
+
 function restartGame() {
     openCards = [];
     numberOfMoves = 0;
     displayMoves.textContent = '0 Moves';
+    stopTimer();
     const table = document.querySelector('.deck');
     table.remove();
     prepareDeck();
