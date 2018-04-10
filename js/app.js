@@ -81,6 +81,12 @@ function shuffle(array) {
 let openCards = [];
 let numberOfMoves = 0;
 
+function gameEnd() {
+    clearTimeout(t);
+    const modal = document.querySelector('#endModal');
+    modal.style.display = "block";
+}
+
 function checkIfCardMatches(opCards) {
     if (opCards[0].firstElementChild.className !== opCards[1].firstElementChild.className) {
         for (const card of opCards) {
@@ -94,7 +100,7 @@ function checkIfCardMatches(opCards) {
     openCards = [];
     const matchedCards = document.querySelectorAll('.card.match');
     if (matchedCards.length === 16) {
-        clearTimeout(t);
+        gameEnd();
     }
 }
 
