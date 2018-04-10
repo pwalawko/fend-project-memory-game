@@ -92,6 +92,10 @@ function checkIfCardMatches(opCards) {
         }
     }
     openCards = [];
+    const matchedCards = document.querySelectorAll('.card.match');
+    if (matchedCards.length === 16) {
+        clearTimeout(t);
+    }
 }
 
 function makeStarEmpty(starIcon){
@@ -163,7 +167,7 @@ function startTimer(evt) {
     timer();
 }
 
-function stopTimer() {
+function resetTimer() {
     clearTimeout(t);
     timerDisplayer.textContent = "00:00:00";
     seconds = 0; minutes = 0; hours = 0;
@@ -173,7 +177,7 @@ function restartGame() {
     openCards = [];
     numberOfMoves = 0;
     displayMoves.textContent = '0 Moves';
-    stopTimer();
+    resetTimer();
     const table = document.querySelector('.deck');
     table.remove();
     prepareDeck();
