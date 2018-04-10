@@ -143,6 +143,7 @@ h1 {
     background-color: #fefefe;
     border-radius: 4px;
     margin: auto;
+    min-width: 270px;
     padding: 1em;
     text-align: center;
     width: 30%;
