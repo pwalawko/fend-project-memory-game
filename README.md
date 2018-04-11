@@ -1,11 +1,5 @@
 # Memory Game
 
-## Table of Contents
-
-* [Instructions](#instructions)
-* [Where to play](#wheretoplay)
-* [Contributing](#contributing)
-
 ## Instructions
 
 ### How to play
