@@ -1,33 +1,33 @@
 const cardList = [
-    "fa-anchor",
-    "fa-anchor",
-    "fa-bomb",
-    "fa-bomb",
-    "fa-bicycle",
-    "fa-bicycle",
-    "fa-bolt",
-    "fa-bolt",
-    "fa-cube",
-    "fa-cube",
-    "fa-diamond",
-    "fa-diamond",
-    "fa-leaf",
-    "fa-leaf",
-    "fa-paper-plane-o",
-    "fa-paper-plane-o"
+    'fa-anchor',
+    'fa-anchor',
+    'fa-bomb',
+    'fa-bomb',
+    'fa-bicycle',
+    'fa-bicycle',
+    'fa-bolt',
+    'fa-bolt',
+    'fa-cube',
+    'fa-cube',
+    'fa-diamond',
+    'fa-diamond',
+    'fa-leaf',
+    'fa-leaf',
+    'fa-paper-plane-o',
+    'fa-paper-plane-o'
 ];
 
 function prepareDeck() {
     const shuffledCardList = shuffle(cardList);
 
     const deckList = document.createElement('ul');
-    deckList.className = "deck";
+    deckList.className = 'deck';
 
     for (const card of shuffledCardList) {
       const liElement = document.createElement('li');
-      liElement.className = "card";
+      liElement.className = 'card';
       const iElement = document.createElement('i');
-      iElement.className = "fa " + card;
+      iElement.className = 'fa ' + card;
       liElement.appendChild(iElement);
       deckList.appendChild(liElement);
     }
@@ -62,14 +62,14 @@ const modal = document.querySelector('#endModal');
 
 function gameEnd() {
     clearTimeout(t);
-    modal.style.display = "block";
+    modal.style.display = 'block';
     const finalTime = document.querySelector('#final-time');
     const finalMoves = document.querySelector('#final-moves');
     const finalStars = document.querySelector('#final-stars');
     const starsNumber = document.querySelectorAll('.fa-star').length;
-    finalTime.textContent = "Your time is " + timerDisplayer.textContent + ",";
-    finalMoves.textContent = "You did it in " + displayMoves.textContent + ",";
-    finalStars.textContent = "and that gives you " + starsNumber + " stars!";
+    finalTime.textContent = 'Your time is ' + timerDisplayer.textContent + ',';
+    finalMoves.textContent = 'You did it in ' + displayMoves.textContent + ',';
+    finalStars.textContent = 'and that gives you ' + starsNumber + ' stars!';
 }
 
 function checkIfCardMatches(opCards) {
@@ -81,7 +81,7 @@ function checkIfCardMatches(opCards) {
         }
     } else {
         for (const card of opCards) {
-            card.classList.add("match");
+            card.classList.add('match');
         }
     }
     openCards = [];
@@ -114,8 +114,8 @@ function starsCounter() {
 const displayMoves = document.querySelector('.moves');
 
 function respondToClickCard(evt) {
-    if (evt.target.nodeName === "LI" && !evt.target.classList.contains('open') && openCards.length < 2) {
-        evt.target.classList.add("open");
+    if (evt.target.nodeName === 'LI' && !evt.target.classList.contains('open') && openCards.length < 2) {
+        evt.target.classList.add('open');
         if (openCards[0] !== evt.target) {
             openCards.push(evt.target);
         }
@@ -148,7 +148,7 @@ function add() {
         }
     }
 
-    timerDisplayer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    timerDisplayer.textContent = (hours ? (hours > 9 ? hours : '0' + hours) : '00') + ':' + (minutes ? (minutes > 9 ? minutes : '0' + minutes) : '00') + ':' + (seconds > 9 ? seconds : '0' + seconds);
 
     timer();
 }
@@ -157,7 +157,7 @@ function timer() {
 }
 
 function startTimer(evt) {
-    if (evt.target.nodeName === "LI") {
+    if (evt.target.nodeName === 'LI') {
         evt.target.parentElement.removeEventListener(evt.type, arguments.callee);
         timer();
     }
@@ -165,7 +165,7 @@ function startTimer(evt) {
 
 function resetTimer() {
     clearTimeout(t);
-    timerDisplayer.textContent = "00:00:00";
+    timerDisplayer.textContent = '00:00:00';
     seconds = 0; minutes = 0; hours = 0;
 }
 
@@ -183,7 +183,7 @@ function restartGame() {
 }
 
 function playAgain() {
-    modal.style.display = "none";
+    modal.style.display = 'none';
     restartGame();
 }
 
