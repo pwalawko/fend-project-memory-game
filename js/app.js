@@ -100,13 +100,13 @@ const stars = document.querySelectorAll('ul.stars li i');
 
 function starsCounter() {
     switch (numberOfMoves) {
-        case 11:
+        case 15:
             makeStarEmpty(stars[2]);
             break;
-        case 21:
+        case 20:
             makeStarEmpty(stars[1]);
             break;
-        case 31:
+        case 25:
             makeStarEmpty(stars[0]);
     }
 }

@@ -1,4 +1,4 @@
-# Memory Game Project
+# Memory Game
 
 ## Table of Contents
 
@@ -7,14 +7,30 @@
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+### How to play
 
-To get started, open `js/app.js` and start building out the app's functionality
+The game board consists of sixteen "cards" arranged in a grid. The deck is made up of eight different pairs of cards, each with different symbols on one side. The cards are arranged randomly on the grid with the symbol face down. The gameplay rules are very simple: flip over two hidden cards at a time to locate the ones that match!
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+### End of game
+
+The game ends once all cards have been correctly matched.
+
+### Features
+
+When the player clicks the first card, the timer starts. It ends when the last pair is matched.
+The moves are counted. One move is one opened pair. The user can see how many moves they made, and on the base of moves the user gets the rating in stars:
+- less than 15 moves - 3 stars,
+- 15 to 19 moves - 2 stars,
+- 20 to 24 moves - 1 star,
+- more than 25 moves - 0 stars.
+
+At the end of the game the modal box appears with detailed info about the users performance (their time, moves number and stars number).
+
+## Where to play
+
+You can try your memory [here](https://pwalawko.github.io/fend-project-memory-game/).
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+This repository is the project for Udacity Front-End Web Developer Nanodegree Program.
+Therefore the pull requests most likely will not be accepted.
