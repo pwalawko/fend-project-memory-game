@@ -16,18 +16,32 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+            <ul class="stars">
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+            </ul>
 
-        	<span class="moves">3</span> Moves
-
-            <div class="restart">
-        		<i class="fa fa-repeat"></i>
-        	</div>
+            <span class="moves">0 Moves</span>
+            <div class="right-side">
+                <span class="timer">00:00:00</span>
+                <div class="restart">
+                    <i class="fa fa-repeat"></i>
+                </div>
+            </div>
         </section>
+
+    </div>
+
+    <div id="endModal" class="modal">
+        <div class="modal-content">
+            <h1>Congratulations! You won!</h1>
+            <p id="final-time"></p>
+            <p id="final-moves"></p>
+            <p id="final-stars"></p>
+            <a id="play-again-btn" class="btn">Play again</a>
+        </div>
+
     </div>
 
     <script src="js/app.js"></script>
