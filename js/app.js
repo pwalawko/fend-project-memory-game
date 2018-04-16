@@ -1,24 +1,17 @@
 const cardList = [
     'fa-anchor',
-    'fa-anchor',
-    'fa-bomb',
     'fa-bomb',
     'fa-bicycle',
-    'fa-bicycle',
-    'fa-bolt',
     'fa-bolt',
     'fa-cube',
-    'fa-cube',
-    'fa-diamond',
     'fa-diamond',
     'fa-leaf',
-    'fa-leaf',
-    'fa-paper-plane-o',
     'fa-paper-plane-o'
 ];
+const doubledCardList = cardList.concat(cardList);
 
 function prepareDeck() {
-    const shuffledCardList = shuffle(cardList);
+    const shuffledCardList = shuffle(doubledCardList);
 
     const deckList = document.createElement('ul');
     deckList.className = 'deck';
