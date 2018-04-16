@@ -1,35 +1,35 @@
 const cardList = [
     'fa-anchor',
-    'fa-anchor',
-    'fa-bomb',
     'fa-bomb',
     'fa-bicycle',
-    'fa-bicycle',
-    'fa-bolt',
     'fa-bolt',
     'fa-cube',
-    'fa-cube',
-    'fa-diamond',
     'fa-diamond',
     'fa-leaf',
-    'fa-leaf',
-    'fa-paper-plane-o',
     'fa-paper-plane-o'
 ];
+const doubledCardList = cardList.concat(cardList);
 
 function prepareDeck() {
-    const shuffledCardList = shuffle(cardList);
+    // This function defines what should happen
+    // to prepare the deck. It is:
+    // - shuffle cards
+    // - create card element for every symbol
+    // - add the cards to the DOM
+    // - create listener for clicking a card
+    // - create listerer for starting the timer
+    const shuffledCardList = shuffle(doubledCardList);
 
     const deckList = document.createElement('ul');
     deckList.className = 'deck';
 
     for (const card of shuffledCardList) {
-      const liElement = document.createElement('li');
-      liElement.className = 'card';
-      const iElement = document.createElement('i');
-      iElement.className = 'fa ' + card;
-      liElement.appendChild(iElement);
-      deckList.appendChild(liElement);
+        const liElement = document.createElement('li');
+        liElement.className = 'card';
+        const iElement = document.createElement('i');
+        iElement.className = 'fa ' + card;
+        liElement.appendChild(iElement);
+        deckList.appendChild(liElement);
     }
 
     document.querySelector('.container').appendChild(deckList);
@@ -43,7 +43,9 @@ prepareDeck();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -56,23 +58,35 @@ function shuffle(array) {
     return array;
 }
 
-let openCards = [];
-let numberOfMoves = 0;
-const modal = document.querySelector('#endModal');
+const game = {
+    moves: 0,
+    matches: [],
+    modal: document.querySelector('#endModal')
+};
 
 function gameEnd() {
+    // This function defines what should happen
+    // at the end of the game. It is:
+    // - stop the timer
+    // - display the modal with users achievements
     clearTimeout(t);
-    modal.style.display = 'block';
+    game.modal.style.display = 'block';
     const finalTime = document.querySelector('#final-time');
     const finalMoves = document.querySelector('#final-moves');
     const finalStars = document.querySelector('#final-stars');
     const starsNumber = document.querySelectorAll('.fa-star').length;
-    finalTime.textContent = 'Your time is ' + timerDisplayer.textContent + ',';
+    finalTime.textContent = 'Your time is ' + timer.displayer.textContent + ',';
     finalMoves.textContent = 'You did it in ' + displayMoves.textContent + ',';
     finalStars.textContent = 'and that gives you ' + starsNumber + ' stars!';
 }
 
 function checkIfCardMatches(opCards) {
+    // This function checks if the two opened card matches.
+    // If they does not match, the function closes the card
+    // by removing 'open' class.
+    // If they matches, the function adds appropriate style
+    // by addin 'match' class.
+    // If all cards are matched, the game ends.
     const firstCard = opCards[0].firstElementChild.className;
     const secondCard = opCards[1].firstElementChild.className;
     if (firstCard !== secondCard) {
@@ -84,7 +98,7 @@ function checkIfCardMatches(opCards) {
             card.classList.add('match');
         }
     }
-    openCards = [];
+    game.matches = [];
 
     const matchedCards = document.querySelectorAll('.card.match');
     if (matchedCards.length === 16) {
@@ -92,86 +106,117 @@ function checkIfCardMatches(opCards) {
     }
 }
 
-function makeStarEmpty(starIcon){
+function makeStarEmpty(starIcon) {
     starIcon.className = 'fa fa-star-o';
 }
 
 const stars = document.querySelectorAll('ul.stars li i');
 
 function starsCounter() {
-    switch (numberOfMoves) {
-        case 15:
+    switch (game.moves) {
+        case 18:
             makeStarEmpty(stars[2]);
             break;
-        case 20:
+        case 27:
             makeStarEmpty(stars[1]);
-            break;
-        case 25:
-            makeStarEmpty(stars[0]);
     }
 }
 
 const displayMoves = document.querySelector('.moves');
 
 function respondToClickCard(evt) {
-    if (evt.target.nodeName === 'LI' && !evt.target.classList.contains('open') && openCards.length < 2) {
+    // This function defines what should happen when a card is clicked.
+    // - check if the card matches
+    // - increase the moves number
+    // - count stars
+    // - set the timer (only for the first card clicked)
+    if (
+        evt.target.nodeName === 'LI' &&
+        !evt.target.classList.contains('open') &&
+        game.matches.length < 2
+    ) {
         evt.target.classList.add('open');
-        if (openCards[0] !== evt.target) {
-            openCards.push(evt.target);
+        if (game.matches[0] !== evt.target) {
+            game.matches.push(evt.target);
         }
-        if (openCards.length === 2) {
-            numberOfMoves++;
-            displayMoves.textContent = numberOfMoves + ' Move';
-            if (numberOfMoves !== 1) {
+        if (game.matches.length === 2) {
+            game.moves++;
+            displayMoves.textContent = game.moves + ' Move';
+            if (game.moves !== 1) {
                 displayMoves.textContent += 's';
             }
             starsCounter();
-            setTimeout(checkIfCardMatches, 500, openCards);
+            setTimeout(checkIfCardMatches, 500, game.matches);
         }
     }
 }
 
 // Timer from https://jsfiddle.net/Daniel_Hug/pvk6p/
-
-let seconds = 0, minutes = 0, hours = 0;
-let t;
-const timerDisplayer = document.querySelector('.timer');
+const timer = {
+    seconds: 0,
+    minutes: 0,
+    hours: 0,
+    displayer: document.querySelector('.timer')
+};
 
 function add() {
-    seconds++;
-    if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-        if (minutes >= 60) {
-            minutes = 0;
-            hours++;
+    timer.seconds++;
+    if (timer.seconds >= 60) {
+        timer.seconds = 0;
+        timer.minutes++;
+        if (timer.minutes >= 60) {
+            timer.minutes = 0;
+            timer.hours++;
         }
     }
 
-    timerDisplayer.textContent = (hours ? (hours > 9 ? hours : '0' + hours) : '00') + ':' + (minutes ? (minutes > 9 ? minutes : '0' + minutes) : '00') + ':' + (seconds > 9 ? seconds : '0' + seconds);
+    timer.displayer.textContent =
+        (timer.hours
+            ? timer.hours > 9
+                ? timer.hours
+                : '0' + timer.hours
+            : '00') +
+        ':' +
+        (timer.minutes
+            ? timer.minutes > 9
+                ? timer.minutes
+                : '0' + timer.minutes
+            : '00') +
+        ':' +
+        (timer.seconds > 9 ? timer.seconds : '0' + timer.seconds);
 
-    timer();
+    addTimer();
 }
-function timer() {
+function addTimer() {
     t = setTimeout(add, 1000);
 }
 
 function startTimer(evt) {
     if (evt.target.nodeName === 'LI') {
-        evt.target.parentElement.removeEventListener(evt.type, arguments.callee);
-        timer();
+        evt.target.parentElement.removeEventListener(
+            evt.type,
+            arguments.callee
+        );
+        addTimer();
     }
 }
 
 function resetTimer() {
     clearTimeout(t);
-    timerDisplayer.textContent = '00:00:00';
-    seconds = 0; minutes = 0; hours = 0;
+    timer.displayer.textContent = '00:00:00';
+    timer.seconds = 0;
+    timer.minutes = 0;
+    timer.hours = 0;
 }
 
 function restartGame() {
-    openCards = [];
-    numberOfMoves = 0;
+    // This function defines what should happen
+    // when the restart button is clicked. It is:
+    // - reset open cards, stars and moves counter
+    // - reset timer
+    // . prepare new deck
+    game.matches = [];
+    game.moves = 0;
     displayMoves.textContent = '0 Moves';
     resetTimer();
     const table = document.querySelector('.deck');
@@ -183,7 +228,7 @@ function restartGame() {
 }
 
 function playAgain() {
-    modal.style.display = 'none';
+    game.modal.style.display = 'none';
     restartGame();
 }
 
