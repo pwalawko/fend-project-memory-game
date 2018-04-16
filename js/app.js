@@ -17,12 +17,12 @@ function prepareDeck() {
     deckList.className = 'deck';
 
     for (const card of shuffledCardList) {
-      const liElement = document.createElement('li');
-      liElement.className = 'card';
-      const iElement = document.createElement('i');
-      iElement.className = 'fa ' + card;
-      liElement.appendChild(iElement);
-      deckList.appendChild(liElement);
+        const liElement = document.createElement('li');
+        liElement.className = 'card';
+        const iElement = document.createElement('i');
+        iElement.className = 'fa ' + card;
+        liElement.appendChild(iElement);
+        deckList.appendChild(liElement);
     }
 
     document.querySelector('.container').appendChild(deckList);
