@@ -11,6 +11,13 @@ const cardList = [
 const doubledCardList = cardList.concat(cardList);
 
 function prepareDeck() {
+    // This function defines what should happen
+    // to prepare the deck. It is:
+    // - shuffle cards
+    // - create card element for every symbol
+    // - add the cards to the DOM
+    // - create listener for clicking a card
+    // - create listerer for starting the timer
     const shuffledCardList = shuffle(doubledCardList);
 
     const deckList = document.createElement('ul');
@@ -56,6 +63,10 @@ const game = {
 };
 
 function gameEnd() {
+    // This function defines what should happen
+    // at the end of the game. It is:
+    // - stop the timer
+    // - display the modal with users achievements
     clearTimeout(t);
     game.modal.style.display = 'block';
     const finalTime = document.querySelector('#final-time');
@@ -68,6 +79,12 @@ function gameEnd() {
 }
 
 function checkIfCardMatches(opCards) {
+    // This function checks if the two opened card matches.
+    // If they does not match, the function closes the card
+    // by removing 'open' class.
+    // If they matches, the function adds appropriate style
+    // by addin 'match' class.
+    // If all cards are matched, the game ends.
     const firstCard = opCards[0].firstElementChild.className;
     const secondCard = opCards[1].firstElementChild.className;
     if (firstCard !== secondCard) {
@@ -106,6 +123,11 @@ function starsCounter() {
 const displayMoves = document.querySelector('.moves');
 
 function respondToClickCard(evt) {
+    // This function defines what should happen when a card is clicked.
+    // - check if the card matches
+    // - increase the moves number
+    // - count stars
+    // - set the timer (only for the first card clicked)
     if (evt.target.nodeName === 'LI' && !evt.target.classList.contains('open') && game.matches.length < 2) {
         evt.target.classList.add('open');
         if (game.matches[0] !== evt.target) {
@@ -164,6 +186,11 @@ function resetTimer() {
 }
 
 function restartGame() {
+    // This function defines what should happen
+    // when the restart button is clicked. It is:
+    // - reset open cards, stars and moves counter
+    // - reset timer
+    // . prepare new deck
     game.matches = [];
     game.moves = 0;
     displayMoves.textContent = '0 Moves';
