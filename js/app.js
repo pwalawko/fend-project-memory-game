@@ -43,7 +43,9 @@ prepareDeck();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -104,7 +106,7 @@ function checkIfCardMatches(opCards) {
     }
 }
 
-function makeStarEmpty(starIcon){
+function makeStarEmpty(starIcon) {
     starIcon.className = 'fa fa-star-o';
 }
 
@@ -128,7 +130,11 @@ function respondToClickCard(evt) {
     // - increase the moves number
     // - count stars
     // - set the timer (only for the first card clicked)
-    if (evt.target.nodeName === 'LI' && !evt.target.classList.contains('open') && game.matches.length < 2) {
+    if (
+        evt.target.nodeName === 'LI' &&
+        !evt.target.classList.contains('open') &&
+        game.matches.length < 2
+    ) {
         evt.target.classList.add('open');
         if (game.matches[0] !== evt.target) {
             game.matches.push(evt.target);
@@ -164,7 +170,20 @@ function add() {
         }
     }
 
-    timer.displayer.textContent = (timer.hours ? (timer.hours > 9 ? timer.hours : '0' + timer.hours) : '00') + ':' + (timer.minutes ? (timer.minutes > 9 ? timer.minutes : '0' + timer.minutes) : '00') + ':' + (timer.seconds > 9 ? timer.seconds : '0' + timer.seconds);
+    timer.displayer.textContent =
+        (timer.hours
+            ? timer.hours > 9
+                ? timer.hours
+                : '0' + timer.hours
+            : '00') +
+        ':' +
+        (timer.minutes
+            ? timer.minutes > 9
+                ? timer.minutes
+                : '0' + timer.minutes
+            : '00') +
+        ':' +
+        (timer.seconds > 9 ? timer.seconds : '0' + timer.seconds);
 
     addTimer();
 }
@@ -174,7 +193,10 @@ function addTimer() {
 
 function startTimer(evt) {
     if (evt.target.nodeName === 'LI') {
-        evt.target.parentElement.removeEventListener(evt.type, arguments.callee);
+        evt.target.parentElement.removeEventListener(
+            evt.type,
+            arguments.callee
+        );
         addTimer();
     }
 }
@@ -182,7 +204,9 @@ function startTimer(evt) {
 function resetTimer() {
     clearTimeout(t);
     timer.displayer.textContent = '00:00:00';
-    timer.seconds = 0; timer.minutes = 0; timer.hours = 0;
+    timer.seconds = 0;
+    timer.minutes = 0;
+    timer.hours = 0;
 }
 
 function restartGame() {
