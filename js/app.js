@@ -95,14 +95,11 @@ const stars = document.querySelectorAll('ul.stars li i');
 
 function starsCounter() {
     switch (game.moves) {
-        case 15:
+        case 18:
             makeStarEmpty(stars[2]);
             break;
-        case 20:
+        case 27:
             makeStarEmpty(stars[1]);
-            break;
-        case 25:
-            makeStarEmpty(stars[0]);
     }
 }
 
