@@ -24,6 +24,14 @@ At the end of the game the modal box appears with detailed info about the users 
 
 You can try your memory [here](https://pwalawko.github.io/fend-project-memory-game/).
 
+## Code Dependencies
+
+The app is built with the following code dependencies:
+
+1. Font Awesome
+1. Bootstrap
+1. ES6
+
 ## Contributing
 
 This repository is the project for Udacity Front-End Web Developer Nanodegree Program.
