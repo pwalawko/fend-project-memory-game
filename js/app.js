@@ -97,9 +97,9 @@ function gameEnd() {
     const finalMoves = document.querySelector('#final-moves');
     const finalStars = document.querySelector('#final-stars');
     const starsNumber = document.querySelectorAll('.fa-star').length;
-    finalTime.textContent = 'Your time is $(timer.displayer.textContent),';
-    finalMoves.textContent = 'You did it in $(displayMoves.textContent),';
-    finalStars.textContent = 'and that gives you $(starsNumber) stars!';
+    finalTime.textContent = `Your time is ${timer.displayer.textContent},`;
+    finalMoves.textContent = `You did it in ${displayMoves.textContent},`;
+    finalStars.textContent = `and that gives you ${starsNumber} stars!`;
 }
 
 function checkIfCardMatches(opCards) {
@@ -181,20 +181,10 @@ function add() {
         }
     }
 
-    timer.displayer.textContent =
-        (timer.hours
-            ? timer.hours > 9
-                ? timer.hours
-                : '0' + timer.hours
-            : '00') +
-        ':' +
-        (timer.minutes
-            ? timer.minutes > 9
-                ? timer.minutes
-                : '0' + timer.minutes
-            : '00') +
-        ':' +
-        (timer.seconds > 9 ? timer.seconds : '0' + timer.seconds);
+    const H = timer.hours.toString().padStart(2, '00');
+    const M = timer.minutes.toString().padStart(2, '00');
+    const S = timer.seconds.toString().padStart(2, '00');
+    timer.displayer.textContent = `${H}:${M}:${S}`;
 
     addTimer();
 }
