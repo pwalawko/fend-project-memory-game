@@ -75,9 +75,9 @@ function gameEnd() {
     const finalMoves = document.querySelector('#final-moves');
     const finalStars = document.querySelector('#final-stars');
     const starsNumber = document.querySelectorAll('.fa-star').length;
-    finalTime.textContent = 'Your time is ' + timer.displayer.textContent + ',';
-    finalMoves.textContent = 'You did it in ' + displayMoves.textContent + ',';
-    finalStars.textContent = 'and that gives you ' + starsNumber + ' stars!';
+    finalTime.textContent = 'Your time is $(timer.displayer.textContent),';
+    finalMoves.textContent = 'You did it in $(displayMoves.textContent),';
+    finalStars.textContent = 'and that gives you $(starsNumber) stars!';
 }
 
 function checkIfCardMatches(opCards) {
