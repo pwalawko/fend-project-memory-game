@@ -9,6 +9,34 @@ const cardList = [
     'fa-paper-plane-o'
 ];
 const doubledCardList = cardList.concat(cardList);
+let displayMoves, game, playAgainButton, restartButton, stars, timer;
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onLoad, false)
+} else {
+    onLoad()
+}
+
+function onLoad () {
+    game = {
+        moves: 0,
+        matches: [],
+        modal: document.querySelector('#endModal')
+    };
+    timer = {
+        seconds: 0,
+        minutes: 0,
+        hours: 0,
+        displayer: document.querySelector('.timer')
+    };
+    displayMoves = document.querySelector('.moves');
+    stars = document.querySelectorAll('ul.stars li i');
+    restartButton = document.querySelector('.restart');
+    playAgainButton = document.querySelector('#play-again-btn');
+
+    restartButton.addEventListener('click', restartGame);
+    playAgainButton.addEventListener('click', playAgain);
+}
 
 function prepareDeck() {
     // This function defines what should happen
@@ -58,12 +86,6 @@ function shuffle(array) {
     return array;
 }
 
-const game = {
-    moves: 0,
-    matches: [],
-    modal: document.querySelector('#endModal')
-};
-
 function gameEnd() {
     // This function defines what should happen
     // at the end of the game. It is:
@@ -75,9 +97,9 @@ function gameEnd() {
     const finalMoves = document.querySelector('#final-moves');
     const finalStars = document.querySelector('#final-stars');
     const starsNumber = document.querySelectorAll('.fa-star').length;
-    finalTime.textContent = 'Your time is ' + timer.displayer.textContent + ',';
-    finalMoves.textContent = 'You did it in ' + displayMoves.textContent + ',';
-    finalStars.textContent = 'and that gives you ' + starsNumber + ' stars!';
+    finalTime.textContent = `Your time is ${timer.displayer.textContent},`;
+    finalMoves.textContent = `You did it in ${displayMoves.textContent},`;
+    finalStars.textContent = `and that gives you ${starsNumber} stars!`;
 }
 
 function checkIfCardMatches(opCards) {
@@ -110,8 +132,6 @@ function makeStarEmpty(starIcon) {
     starIcon.className = 'fa fa-star-o';
 }
 
-const stars = document.querySelectorAll('ul.stars li i');
-
 function starsCounter() {
     switch (game.moves) {
         case 18:
@@ -121,8 +141,6 @@ function starsCounter() {
             makeStarEmpty(stars[1]);
     }
 }
-
-const displayMoves = document.querySelector('.moves');
 
 function respondToClickCard(evt) {
     // This function defines what should happen when a card is clicked.
@@ -152,13 +170,6 @@ function respondToClickCard(evt) {
 }
 
 // Timer from https://jsfiddle.net/Daniel_Hug/pvk6p/
-const timer = {
-    seconds: 0,
-    minutes: 0,
-    hours: 0,
-    displayer: document.querySelector('.timer')
-};
-
 function add() {
     timer.seconds++;
     if (timer.seconds >= 60) {
@@ -170,23 +181,14 @@ function add() {
         }
     }
 
-    timer.displayer.textContent =
-        (timer.hours
-            ? timer.hours > 9
-                ? timer.hours
-                : '0' + timer.hours
-            : '00') +
-        ':' +
-        (timer.minutes
-            ? timer.minutes > 9
-                ? timer.minutes
-                : '0' + timer.minutes
-            : '00') +
-        ':' +
-        (timer.seconds > 9 ? timer.seconds : '0' + timer.seconds);
+    const H = timer.hours.toString().padStart(2, '00');
+    const M = timer.minutes.toString().padStart(2, '00');
+    const S = timer.seconds.toString().padStart(2, '00');
+    timer.displayer.textContent = `${H}:${M}:${S}`;
 
     addTimer();
 }
+
 function addTimer() {
     t = setTimeout(add, 1000);
 }
@@ -231,9 +233,3 @@ function playAgain() {
     game.modal.style.display = 'none';
     restartGame();
 }
-
-const restartButton = document.querySelector('.restart');
-restartButton.addEventListener('click', restartGame);
-
-const playAgainButton = document.querySelector('#play-again-btn');
-playAgainButton.addEventListener('click', playAgain);
